@@ -1,12 +1,11 @@
-# this script was created by Alex Jabbour on Nov 15, 2019
 import smtplib
 import os
-from recruiter_emails import recruiter_emails
+from sheets import RecruiterDataFetch
+
 
 # recruiter_emails is a list of objects with structure {"name":<recruiter_name>, "email":<recruiter_email>, "company":<company_name>}
-
 class coldmail:
-    def __init__(self, recruiter_name, company_name, email_address):
+    def __init__(self, Name, Company, Email, Type):
 
         if (recruiter_name == None): recruiter_name = company_name + " hiring manager(s)"
         # compose email string
@@ -49,6 +48,9 @@ if __name__ == "__main__":
     server.ehlo()
     server.starttls()
     server.login(os.environ["gmail_email"], os.environ["gmail_password"])
+
+
+    recruiter = RecruiterDataFetch.recruiter_all_records()
 
     # go thru each recruiter, taking the name, company and email
     for recruiter in recruiter_emails:

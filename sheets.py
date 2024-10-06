@@ -11,9 +11,12 @@ file_name = 'client_key.json'
 creds = ServiceAccountCredentials.from_json_keyfile_name(file_name,scope)
 client = gspread.authorize(creds)
 
-
-#Fetch the sheet
-sheet = client.open('RecruiterEmailList').sheet1
-python_sheet = sheet.get_all_records()
-pp = pprint.PrettyPrinter()
-pp.pprint(python_sheet)
+class RecruiterDataFetch:
+    def recruiter_all_records():
+        #Fetch the sheet
+        sheet = client.open('RecruiterEmailList').sheet1
+        python_sheet = sheet.get_values('A:E')
+        pp = pprint.PrettyPrinter()
+        #pp.pprint(python_sheet)
+        return python_sheet
+    
