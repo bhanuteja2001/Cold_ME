@@ -1,0 +1,12 @@
+Greetings {}, my name is Alex Jabbour.
+
+I understand your time is valuable, I only have 3 things to say:
+
+I've been developing object-oriented code and writing systematic python scripts since I was 13. I read a lot and not afraid to learn new technologies.
+
+I have 1 year of experience working as a software engineer, managing cloud infrastructure, and developing microservices - 8 months of which in Silicon Valley.
+
+I want to intern for {}. Can I forward my resume?
+
+Warm regards,
+Alex

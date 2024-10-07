@@ -1,31 +1,39 @@
 import smtplib
 import os
-from sheets import RecruiterDataFetch
+from jsonify import RecruiterDataProcessor
+import json
 
 
+#coldmail(person['Name'], person['Email'], person['Company'], person['Type'])
 # recruiter_emails is a list of objects with structure {"name":<recruiter_name>, "email":<recruiter_email>, "company":<company_name>}
 class coldmail:
-    def __init__(self, Name, Company, Email, Type):
+    def __init__(self, Name, Email, Company, Type):
+        if (Type == 'DE_Manager'):
+            # compose email for DE Manager
+            with open('manager_DE.txt', 'r') as file:
+                content = file.read()
 
-        if (recruiter_name == None): recruiter_name = company_name + " hiring manager(s)"
-        # compose email string
-        message = """
-Greetings {}, my name is Alex Jabbour.
+            content = content.format(person['Name'], person['Company'])
 
-I understand your time is valuable, I only have 3 things to say:
+            subject = "My interest in a SWE internship at {}".format(company_name)
+        elif (Type == 'DS_Manager'):
+            # compose email for DE Manager
+            with open('manager_DS.txt', 'r') as file:
+                content = file.read()
 
-I've been developing object-oriented code and writing systematic python scripts since I was 13. I read a lot and not afraid to learn new technologies.
+            content = content.format(person['Name'], person['Company'])
 
-I have 1 year of experience working as a software engineer, managing cloud infrastructure, and developing microservices - 8 months of which in Silicon Valley.
+            subject = "My interest in a SWE internship at {}".format(company_name)
+        elif (Type == 'Recruiter'):
+            # compose email for DE Manager
+            with open('Recruiter.txt', 'r') as file:
+                content = file.read()
 
-I want to intern for {}. Can I forward my resume?
+            content = content.format(person['Name'], person['Company'])
 
-Warm regards,
-Alex
-        """.format(recruiter_name, company_name)
-
-        subject = "My interest in a SWE internship at {}".format(company_name)
-
+            subject = "My interest in a SWE internship at {}".format(company_name)
+        
+        
         # establish connection to outlook email
         self.FROM = os.environ["gmail_email"]
         self.TO = [email_address]
@@ -50,11 +58,21 @@ if __name__ == "__main__":
     server.login(os.environ["gmail_email"], os.environ["gmail_password"])
 
 
-    recruiter = RecruiterDataFetch.recruiter_all_records()
+    processor = RecruiterDataProcessor()
+    people = json.loads(processor.get_json_data())
+
+
+    # for person in people:
+    #     print('Name: ', person['Name'])
+    #     print('Email: ', person['Email'])
+    #     print('Company: ', person['Company'])
+    #     print('Status: ', person['Status'])
+    #     print('Type: ', person['Type'])
+
 
     # go thru each recruiter, taking the name, company and email
-    for recruiter in recruiter_emails:
-        coldmail(recruiter["name"], recruiter["company"], recruiter["email"])
+    for person in people:
+        coldmail(person['Name'], person['Email'], person['Company'], person['Type'])
 
     server.quit()
 
