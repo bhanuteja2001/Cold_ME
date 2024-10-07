@@ -1,78 +1,93 @@
 import smtplib
 import os
-from jsonify import RecruiterDataProcessor
 import json
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from jsonify import RecruiterDataProcessor
+from sheets import RecruiterDataFetch
 
-
-#coldmail(person['Name'], person['Email'], person['Company'], person['Type'])
-# recruiter_emails is a list of objects with structure {"name":<recruiter_name>, "email":<recruiter_email>, "company":<company_name>}
-class coldmail:
-    def __init__(self, Name, Email, Company, Type):
-        if (Type == 'DE_Manager'):
-            # compose email for DE Manager
-            with open('manager_DE.txt', 'r') as file:
-                content = file.read()
-
-            content = content.format(person['Name'], person['Company'])
-
-            subject = "My interest in a SWE internship at {}".format(company_name)
-        elif (Type == 'DS_Manager'):
-            # compose email for DE Manager
-            with open('manager_DS.txt', 'r') as file:
-                content = file.read()
-
-            content = content.format(person['Name'], person['Company'])
-
-            subject = "My interest in a SWE internship at {}".format(company_name)
-        elif (Type == 'Recruiter'):
-            # compose email for DE Manager
-            with open('Recruiter.txt', 'r') as file:
-                content = file.read()
-
-            content = content.format(person['Name'], person['Company'])
-
-            subject = "My interest in a SWE internship at {}".format(company_name)
+class ColdMail:
+    def __init__(self, Name, Email, Company, Type, server):
+        self.server = server  # Store server instance
         
-        
-        # establish connection to outlook email
+        # Initialize subject and content
+        subject = "Default Subject"
+        content = "Default content. Please check the email type."
+
+        # Prepare the email content and subject based on the Type
+        if Type == 'DE_Manager':
+            with open('Content/manager_DE.txt', 'r') as file:
+                content = file.read()
+            content = content.format(Name, Company)
+            subject = f"My interest in a SWE internship at {Company}"
+            resume_file = "Resumes/Bhanu_DE_Resume.pdf"
+        elif Type == 'DS_Manager':
+            with open('Content/manager_DS.txt', 'r') as file:
+                content = file.read()
+            content = content.format(Name, Company)
+            subject = f"My interest in a SWE internship at {Company}"
+            resume_file = "Resumes/Bhanu_DS_Resume.pdf"
+        elif Type == 'Recruiter':
+            with open('Content/Recruiter.txt', 'r') as file:
+                content = file.read()
+            content = content.format(Name, Company)
+            subject = f"My interest in a SWE internship at {Company}"
+            resume_file = "Resumes/Resume_Recruiter.pdf"
+        else:
+            print(f"Unknown Type: {Type}. Email will not be sent.")
+            return  # Exit the constructor if Type is unknown
+
+        # Create the email message
         self.FROM = os.environ["gmail_email"]
-        self.TO = [email_address]
+        self.TO = [Email]
 
-        # Prepare message wrapper
-        self.full_mail = """From: %s\r\nTo: %s\r\nSubject: %s\r\n\
+        self.msg = MIMEMultipart()
+        self.msg['From'] = self.FROM
+        self.msg['To'] = ", ".join(self.TO)
+        self.msg['Subject'] = subject
 
-        %s
-        """ % (self.FROM, ", ".join(self.TO), subject, message)
+        # Attach the email body
+        self.msg.attach(MIMEText(content, 'plain'))
 
-        self.send_mail()
+        # Attach the appropriate resume file if it exists
+        if 'resume_file' in locals():
+            self.attach_resume(resume_file)
+            # Send the email only if the resume file exists
+            self.send_mail()
+        else:
+            print(f"No valid resume file for Type: {Type}. Email will not be sent.")
+
+    def attach_resume(self, resume_file):
+        # Attach the specified resume file
+        with open(resume_file, 'rb') as resume:
+            part = MIMEApplication(resume.read(), Name=os.path.basename(resume_file))
+            part['Content-Disposition'] = f'attachment; filename="{os.path.basename(resume_file)}"'
+            self.msg.attach(part)
 
     def send_mail(self):
-        # Send the mail
-        server.sendmail(self.FROM, self.TO, self.full_mail)
+        try:
+            self.server.sendmail(self.FROM, self.TO, self.msg.as_string())
+            print(f"Email sent to {self.TO}")
+        except Exception as e:
+            print(f"Failed to send email to {self.TO}: {e}")
 
 if __name__ == "__main__":
-    # run the script
+    # Run the script
     server = smtplib.SMTP("smtp.gmail.com:587")
     server.ehlo()
     server.starttls()
     server.login(os.environ["gmail_email"], os.environ["gmail_password"])
 
-
     processor = RecruiterDataProcessor()
     people = json.loads(processor.get_json_data())
 
-
-    # for person in people:
-    #     print('Name: ', person['Name'])
-    #     print('Email: ', person['Email'])
-    #     print('Company: ', person['Company'])
-    #     print('Status: ', person['Status'])
-    #     print('Type: ', person['Type'])
-
-
-    # go thru each recruiter, taking the name, company and email
+    # Go through each recruiter, taking the name, company, and email
     for person in people:
-        coldmail(person['Name'], person['Email'], person['Company'], person['Type'])
+        if person and 'Name' in person and 'Email' in person and 'Company' in person and 'Type' in person:
+            coldmail = ColdMail(person['Name'], person['Email'], person['Company'], person['Type'], server)
+            person['Status'] = "Updated"
+    
+    RecruiterDataFetch.update_status(people)
 
     server.quit()
-
