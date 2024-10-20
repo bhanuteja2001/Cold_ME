@@ -28,12 +28,13 @@ jobs:
       - name: Create client_key.json file
         run: |
           echo "${{ secrets.CLIENT_KEY_JSON }}" > client_key.json
-    
-          - name: Set up environment variables
-          env:
-            GMAIL_EMAIL: ${{ secrets.gmail_email }}
-            GMAIL_PASSWORD: ${{ secrets.gmail_password }}
-  
+
+      - name: Set up environment variables
+        run: echo "Environment variables set."
+        env:
+          GMAIL_EMAIL: ${{ secrets.gmail_email }}
+          GMAIL_PASSWORD: ${{ secrets.gmail_password }}
+
       - name: Run coldmail script
         run: |
           python coldmail.py
