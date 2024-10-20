@@ -26,8 +26,18 @@ jobs:
           pip install -r requirements.txt
 
       - name: Create client_key.json file
-        run: echo "${{ secrets.CLIENT_KEY_JSON }}" > client_key.json
-
+        run: |
+          echo "${{ secrets.CLIENT_KEY_JSON }}" > client_key.json
+          cat client_key.json  # Debugging step to print the content
+    
+          - name: Set up environment variables
+          env:
+            GMAIL_EMAIL: ${{ secrets.gmail_email }}
+            GMAIL_PASSWORD: ${{ secrets.gmail_password }}
+  
       - name: Run coldmail script
         run: |
           python coldmail.py
+        env:
+          GMAIL_EMAIL: ${{ secrets.gmail_email }}
+          GMAIL_PASSWORD: ${{ secrets.gmail_password }}
