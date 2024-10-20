@@ -1,6 +1,7 @@
 name: Schedule Coldmail Script
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0,30 3 * * *'  # Runs at 3:00 AM and 3:30 AM UTC (9 PM - 9:30 PM CST)
     - cron: '0,30 4 * * *'  # Runs at 4:00 AM and 4:30 AM UTC (10 PM - 10:30 PM CST)
