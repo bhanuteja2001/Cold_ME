@@ -19,7 +19,7 @@ class RecruiterDataFetch:
         python_sheet = sheet.get_values('A:F')
         
         # Filter records where the Status (E column) is not equal to "Updated"
-        filtered_records = [row for row in python_sheet if row[4] != "Updated"]
+        filtered_records = [row for row in python_sheet if row[4] != "Email Sent"]
 
         pp = pprint.PrettyPrinter()
         # pp.pprint(filtered_records)  # Uncomment for debugging

@@ -86,7 +86,7 @@ if __name__ == "__main__":
     for person in people:
         if person and 'Name' in person and 'Email' in person and 'Company' in person and 'Type' in person:
             coldmail = ColdMail(person['Name'], person['Email'], person['Company'], person['Type'], server)
-            person['Status'] = "Updated"
+            person['Status'] = "Email Sent"
     
     RecruiterDataFetch.update_status(people)
 
