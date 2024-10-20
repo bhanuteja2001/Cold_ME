@@ -1,0 +1,32 @@
+name: Schedule Coldmail Script
+
+on:
+  schedule:
+    - cron: '0,30 3 * * *'  # Runs at 3:00 AM and 3:30 AM UTC (9 PM - 9:30 PM CST)
+    - cron: '0,30 4 * * *'  # Runs at 4:00 AM and 4:30 AM UTC (10 PM - 10:30 PM CST)
+    - cron: '0,30 5 * * *'  # Runs at 5:00 AM and 5:30 AM UTC (11 PM - 11:30 PM CST)
+    - cron: '0,30 6 * * *'  # Runs at 6:00 AM and 6:30 AM UTC (12 AM - 12:30 AM CST)
+    - cron: '0 7 * * *'     # Runs at 7:00 AM UTC (1 AM CST)
+
+jobs:
+  run-coldmail:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'  # Replace with your Python version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create client_key.json file
+        run: echo "${{ secrets.CLIENT_KEY_JSON }}" > client_key.json
+
+      - name: Run coldmail script
+        run: |
+          python coldmail.py

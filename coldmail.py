@@ -81,10 +81,12 @@ if __name__ == "__main__":
 
     processor = RecruiterDataProcessor()
     people = json.loads(processor.get_json_data())
+    print("Cold_Email.py received {} records".format(len(people)))
 
     # Go through each recruiter, taking the name, company, and email
     for person in people:
         if person and 'Name' in person and 'Email' in person and 'Company' in person and 'Type' in person:
+            print('Sending email to {} from {} who is the {}'.format(person['Name'], person['Company'], person['Type']))
             coldmail = ColdMail(person['Name'], person['Email'], person['Company'], person['Type'], server)
             person['Status'] = "Email Sent"
     
