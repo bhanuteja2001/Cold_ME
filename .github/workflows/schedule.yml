@@ -28,6 +28,7 @@ jobs:
       - name: Create client_key.json file
         run: |
           echo "${{ secrets.CLIENT_KEY_JSON }}" > client_key.json
+          cat client_key.json
 
       - name: Set up environment variables
         run: echo "Environment variables set."
