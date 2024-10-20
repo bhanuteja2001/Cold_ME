@@ -10,12 +10,12 @@
 
     <p>
         I'm Bhanu, a grad student (May '25) from the University of Illinois (UIUC) pursuing Master of Science in
-        Information Management and currently working as a Data Engineering Intern at AGCO Corporation. 
+        Information Management and currently working as a Advanced Analytics Intern at AGCO Corporation. 
         I'm reaching out because I'm really interested in joining the {Company}'s Data Team.
     </p>
 
     <p>
-        I'm looking for opportunities grow as a data engineer, and {Company} seems like 
+        I'm looking for opportunities to grow in the field of data science, and {Company} seems like 
         an ideal place to do that. If you have any openings that might fit my background, I'd be really 
         excited to hear about them.
     </p>

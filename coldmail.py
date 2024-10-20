@@ -7,32 +7,37 @@ from email.mime.application import MIMEApplication
 from jsonify import RecruiterDataProcessor
 from sheets import RecruiterDataFetch
 
+
 class ColdMail:
     def __init__(self, Name, Email, Company, Type, server):
         self.server = server  # Store server instance
-        
+
         # Initialize subject and content
         subject = "Default Subject"
         content = "Default content. Please check the email type."
 
         # Prepare the email content and subject based on the Type
-        if Type == 'DE_Manager':
-            with open('Content/manager_DE.txt', 'r') as file:
+        if Type == "DE_Manager":
+            with open("Content/manager_DE.txt", "r") as file:
                 content = file.read()
-            content = content.format(Name, Company)
-            subject = f"My interest in a SWE internship at {Company}"
+            content = content.format(Name = Name, Company = Company)
+            subject = f"Info on Data Engineering opportunities at {Company}"
             resume_file = "Resumes/Bhanu_DE_Resume.pdf"
-        elif Type == 'DS_Manager':
-            with open('Content/manager_DS.txt', 'r') as file:
+        elif Type == "DS_Manager":
+            with open("Content/manager_DS.txt", "r") as file:
                 content = file.read()
-            content = content.format(Name, Company)
-            subject = f"My interest in a SWE internship at {Company}"
+            
+            # Format the content with placeholders
+            content = content.format(Name=Name, Company=Company)
+
+            subject = f"Info on Data Science opportunities at {Company}"
             resume_file = "Resumes/Bhanu_DS_Resume.pdf"
-        elif Type == 'Recruiter':
-            with open('Content/Recruiter.txt', 'r') as file:
+
+        elif Type == "Recruiter":
+            with open("Content/Recruiter.txt", "r") as file:
                 content = file.read()
-            content = content.format(Name, Company)
-            subject = f"My interest in a SWE internship at {Company}"
+            content = content.format(Name = Name, Company = Company)
+            subject = f"Info on 2025 New Grad / Spring opportunities at {Company}"
             resume_file = "Resumes/Resume_Recruiter.pdf"
         else:
             print(f"Unknown Type: {Type}. Email will not be sent.")
@@ -43,15 +48,15 @@ class ColdMail:
         self.TO = [Email]
 
         self.msg = MIMEMultipart()
-        self.msg['From'] = self.FROM
-        self.msg['To'] = ", ".join(self.TO)
-        self.msg['Subject'] = subject
+        self.msg["From"] = self.FROM
+        self.msg["To"] = ", ".join(self.TO)
+        self.msg["Subject"] = subject
 
         # Attach the email body
-        self.msg.attach(MIMEText(content, 'plain'))
+        self.msg.attach(MIMEText(content, "html"))
 
         # Attach the appropriate resume file if it exists
-        if 'resume_file' in locals():
+        if "resume_file" in locals():
             self.attach_resume(resume_file)
             # Send the email only if the resume file exists
             self.send_mail()
@@ -60,9 +65,11 @@ class ColdMail:
 
     def attach_resume(self, resume_file):
         # Attach the specified resume file
-        with open(resume_file, 'rb') as resume:
+        with open(resume_file, "rb") as resume:
             part = MIMEApplication(resume.read(), Name=os.path.basename(resume_file))
-            part['Content-Disposition'] = f'attachment; filename="{os.path.basename(resume_file)}"'
+            part["Content-Disposition"] = (
+                f'attachment; filename="{os.path.basename(resume_file)}"'
+            )
             self.msg.attach(part)
 
     def send_mail(self):
@@ -71,6 +78,7 @@ class ColdMail:
             print(f"Email sent to {self.TO}")
         except Exception as e:
             print(f"Failed to send email to {self.TO}: {e}")
+
 
 if __name__ == "__main__":
     # Run the script
@@ -85,11 +93,27 @@ if __name__ == "__main__":
 
     # Go through each recruiter, taking the name, company, and email
     for person in people:
-        if person and 'Name' in person and 'Email' in person and 'Company' in person and 'Type' in person:
-            print('Sending email to {} from {} who is the {}'.format(person['Name'], person['Company'], person['Type']))
-            coldmail = ColdMail(person['Name'], person['Email'], person['Company'], person['Type'], server)
-            person['Status'] = "Email Sent"
-    
+        if (
+            person
+            and "Name" in person
+            and "Email" in person
+            and "Company" in person
+            and "Type" in person
+        ):
+            print(
+                "Sending email to {} from {} who is the {}".format(
+                    person["Name"], person["Company"], person["Type"]
+                )
+            )
+            coldmail = ColdMail(
+                person["Name"],
+                person["Email"],
+                person["Company"],
+                person["Type"],
+                server,
+            )
+            person["Status"] = "Email Sent"
+
     RecruiterDataFetch.update_status(people)
 
     server.quit()
