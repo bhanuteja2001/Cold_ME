@@ -20,13 +20,13 @@ class ColdMail:
         if Type == "DE_Manager":
             with open("Content/manager_DE.txt", "r") as file:
                 content = file.read()
-            content = content.format(Name = Name, Company = Company)
+            content = content.format(Name=Name, Company=Company)
             subject = f"Info on Data Engineering opportunities at {Company}"
             resume_file = "Resumes/Bhanu_DE_Resume.pdf"
         elif Type == "DS_Manager":
             with open("Content/manager_DS.txt", "r") as file:
                 content = file.read()
-            
+
             # Format the content with placeholders
             content = content.format(Name=Name, Company=Company)
 
@@ -36,7 +36,7 @@ class ColdMail:
         elif Type == "Recruiter":
             with open("Content/Recruiter.txt", "r") as file:
                 content = file.read()
-            content = content.format(Name = Name, Company = Company)
+            content = content.format(Name=Name, Company=Company)
             subject = f"Info on 2025 New Grad / Spring opportunities at {Company}"
             resume_file = "Resumes/Resume_Recruiter.pdf"
         else:
