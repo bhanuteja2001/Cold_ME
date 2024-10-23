@@ -23,7 +23,7 @@
         </ol>
 
     <p>
-        I'm looking for opportunities to grow in the field of data sciencer, and {Company} seems like 
+        I'm looking for opportunities to grow in the field of data science, and {Company} seems like 
         an ideal place to do that. If you have any openings that might fit my background, I'd be really 
         excited to hear about them.
     </p>
