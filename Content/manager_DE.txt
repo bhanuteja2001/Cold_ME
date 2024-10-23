@@ -9,20 +9,28 @@
     <p>Hi {Name},</p>
 
     <p>
-        I'm Bhanu, a grad student (May '25) from the University of Illinois (UIUC) pursuing Master of Science in
-        Information Management and currently working as a Data Engineering Intern at AGCO Corporation. 
-        I'm reaching out because I'm really interested in joining the {Company}'s Data Team.
+        Hope you are having a wonderful day! I'm Bhanu, a grad student (May '25) from the <b>University of Illinois at Urbana-Champaign (UIUC)</b> pursuing <b>Master of Science in
+        Information Management</b> and currently working as a Data Engineering Intern at AGCO Corporation. 
+        I'm reaching out because I'm really interested to be part of {Company}'s Data Team.
     </p>
 
+    <p>A bit about me:</p>
+        <ol>
+            <li>Proven track record of designing and implementing robust data pipelines, with expertise in both <b>ETL and ELT methodologies</b>, ensuring efficient data processing and maintaining data quality standards.</li>
+            <li>Extensive experience across diverse industries including <b>BFS,  AgriTech, SaaS, and EdTech</b>.</li>
+            <li>Experience working with tools and platforms like <b>Databricks, Snowflake, AWS, dbt, Apache Airflow, and Alteryx</b>, showcasing a comprehensive skill set for modern data architecture.</li>
+            <li>Ability to <b>automate/reduce manual effort using IaC (CloudFormation, Terraform)</b> and other best devops practices.</li>
+        </ol>
+
     <p>
-        I'm looking for opportunities grow as a data engineer, and {Company} seems like 
+        I'm looking for opportunities to grow as a data engineer, and {Company} seems like 
         an ideal place to do that. If you have any openings that might fit my background, I'd be really 
         excited to hear about them.
     </p>
 
     <p>
-        I'm available for a full-time internship for Spring 2025 or a full-time position starting May 2025. 
-        I've attached my resume, and you can check out more of my work on my portfolio site: 
+        I'm available for a <b>full-time internship / co-op for Spring 2025 (Starting Jan 2025) or a full-time position starting May 2025.</b>
+        I've attached my resume, and you can also check out more of my work on my portfolio site: 
         <a href='https://sites.google.com/view/bhanukurakula/'>My Portfolio</a>.
     </p>
 

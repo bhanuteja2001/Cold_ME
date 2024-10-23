@@ -38,7 +38,7 @@ class ColdMail:
                 content = file.read()
             content = content.format(Name=Name, Company=Company)
             subject = f"Info on 2025 New Grad / Spring opportunities at {Company}"
-            resume_file = "Resumes/Resume_Recruiter.pdf"
+            resume_file = "Resumes/Bhanu_Kurakula_Resume.pdf"
         else:
             print(f"Unknown Type: {Type}. Email will not be sent.")
             return  # Exit the constructor if Type is unknown

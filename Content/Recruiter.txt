@@ -9,8 +9,8 @@
     <p>Hi {Name},</p>
 
     <p>
-    My name is Bhanu, and I’m a graduate student at the University of Illinois (UIUC), pursuing a Master of Science in Information Management, graduating in May 2025. 
-    I’m currently an Advanced Analytics Intern at AGCO Corporation.
+    My name is Bhanu, and I’m a graduate student at the <b>University of Illinois at Urbana-Champaign (UIUC)</b>, pursuing a <b>Master of Science in Information Management (May '25)</b>. 
+    Also, I’m currently an Advanced Analytics Intern at AGCO Corporation.
     </p>
 
     <p>
@@ -19,9 +19,12 @@
     </p>
 
     <p>
-        I am available for a full-time internship in Spring 2025 or a full-time position starting in May 2025. Thank you for your time, and I look forward to your response.
+        I am available for a <b>full-time internship / co-op for Spring 2025 (Starting Jan 2025) or a full-time position starting May 2025.</b>
     </p>
 
+    <p>
+        Thank you so much for your valuable time. I look forward to hearing from you!
+    </p>
 
 
     <p>Best,<br>
