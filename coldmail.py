@@ -17,7 +17,7 @@ class ColdMail:
         content = "Default content. Please check the email type."
 
         # Prepare the email content and subject based on the Type
-        if Type == "DE_Manager":
+        if Type == "DE_Manager" or Type == "Director DE"::
             with open("Content/manager_DE.txt", "r") as file:
                 content = file.read()
             content = content.format(Name=Name, Company=Company)
